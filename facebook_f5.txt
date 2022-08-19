@@ -1,0 +1,93 @@
+from transformers 
+import BartTokenizer, TFBartForConditionalGeneration
+
+model = TFBartForConditionalGeneration.from_pretrained("facebook/bart-large")
+
+tokenizer = BartTokenizer.from_pretrained("facebook/bart-large")
+
+inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=1024, truncation=True,
+ return_tensors="tf")
+
+# Generate Summary
+
+summary_ids = model.generate(inputs["input_ids"],
+
+num_beams=1,
+
+no_repeat_ngram_size=1,
+
+min_length=10,
+
+max_length=20)
+
+pprint(tokenizer.batch_decode(summary_ids, skip_special_tokens=True,
+ clean_up_tokenization_spaces=False), compact=True)
+
+
+##########################################################################################################
+
+from transformers import T5Tokenizer, TFT5ForConditionalGeneration
+ 
+
+ 
+ 
+ 
+ARTICLE_TO_SUMMARIZE = (
+ 
+"PG&E stated it scheduled the blackouts in response to forecasts for high winds "
+ 
+"amid dry conditions. The aim is to reduce the risk of wildfires. Nearly 800 thousand customers were "
+ 
+"scheduled to be affected by the shutoffs which were expected to last through at least midday tomorrow."
+ 
+"The record breaking drought has made the current conditions even worse than in previous years. It exponentially"
+ 
+"increases the probability of large scale wildfires."
+ 
+)
+ 
+ 
+ 
+
+ 
+
+model = TFT5ForConditionalGeneration.from_pretrained("google/t5-v1_1-base")
+ 
+tokenizer = T5Tokenizer.from_pretrained("google/t5-v1_1-base")
+ 
+
+ 
+ 
+ 
+model.summary()
+ 
+
+ 
+
+ 
+ 
+ 
+PROMPT = 'summarize: '
+ 
+T5ARTICLE_TO_SUMMARIZE = PROMPT + ARTICLE_TO_SUMMARIZE
+ 
+
+ 
+# Generate Summary
+ 
+ 
+ 
+ 
+ 
+summary_ids = model.generate(inputs["input_ids"],
+ 
+num_beams=1,
+ 
+no_repeat_ngram_size=1,
+ 
+min_length=10,
+ 
+max_length=20)
+ 
+pprint(tokenizer.batch_decode(summary_ids, skip_special_tokens=True,
+clean_up_tokenization_spaces=False)[0], compact=True)
