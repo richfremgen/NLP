@@ -1,0 +1,12 @@
+import os 
+import pandas as pd
+import pymysql
+from sqlalchemy import create_engine
+import pyodbc
+from sqlalchemy import create_engine
+import mysql.connector as sql 
+
+
+db_connection = sql.connect(host='hostname', database='database name', 
+                            user='root', password='password')
+df = pd.read_sql("""SELECT * FROM table""", con=db_connection) 
